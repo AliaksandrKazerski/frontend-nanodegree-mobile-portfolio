@@ -450,11 +450,11 @@ var resizePizzas = function(size) {
 
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    var randomPizzaContainerElement = document.querySelectorAll(".randomPizzaContainer");
-    for (var i = 0; i < randomPizzaContainerElement.length; i++) {
-      var dx = determineDx(document.randomPizzaContainerElement[i], size);
-      var newwidth = (document.randomPizzaContainerElement[i].offsetWidth + dx) + 'px';
-      document.randomPizzaContainerElement[i].style.width = newwidth;
+    var randomPizzaContainerElements = document.querySelectors(".randomPizzaContainer");
+    var dx = determineDx(document.randomPizzaContainerElements[0], size);
+    var newwidth = (document.randomPizzaContainerElements[0].offsetWidth + dx) + 'px';
+    for (var i = 0; i < randomPizzaContainerElements.length; i++) {
+      document.randomPizzaContainerElements[i].style.width = newwidth;
     }
   }
 
@@ -508,7 +508,7 @@ function updatePositions() {
     // document.body.scrollTop is no longer supported in Chrome.
     var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     var phase = Math.sin((scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    items[i].style.transform = 'translate(' + (items[i].basicLeft + Math.floor(100 * phase)) + 'px)';
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -529,7 +529,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
   var movingPizzas1Element = document.querySelector("#movingPizzas1");
-  for (var i = 0; i < 200; i++) {
+  var mostVisiblePizzas = Math.floor((window.innerHeight/s) + 1) * cols;
+  for (var i = 0; i < mostVisiblePizzas; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
